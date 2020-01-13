@@ -1,2 +1,3 @@
 # GrossPitaevskii
-C++ project, numerical calculations, CUDA itp
+C++ project, numerical calculations, CUDA etc.
+
