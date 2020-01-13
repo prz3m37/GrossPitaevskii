@@ -1,0 +1,12 @@
+#Physical parameters
+
+wkx=4.0
+wky=0.25
+fieldAmplitude=0.5
+bosonMass=1.0
+polaritionsMass=1.0
+cavSizeX=12
+cavSizeXY=12
+timeStep=0.0001
+xSizeMesh=120
+ySizeMesh=120
