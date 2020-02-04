@@ -1,27 +1,41 @@
 #include "ConfigurationParser.cpp"
 using namespace std ;
 
-
-template <typename T>
-void foo() {
-  cout << sizeof(T)<<endl;
-}
-
 int main()
 {
-    ConfigParser cfgParser;
 
-    std::string  parameter;
+    ConfigParser cfgParser;
     const std::string cfgFile = "params.txt";
-    const std::string requiredParameter = "wkx" ;
-    //getReqiuredParam<double>(requiredParameter, cfgFile);
-    //int par;
-    //par = stoi(parameter.c_str());
-    double var;
+
+    const std::string polaritionsMass = "polaritionsMass";
+    const std::string fieldAmplitude = "fieldAmplitude";
+    const std::string planckConst = "planckConst";
+    const std::string meshConstX = "meshConstX";
+    const std::string meshConstY = "meshConstX";
+    const std::string bosonMass = "bosonMass";
+    const std::string meshSizeX = "meshSizeX";
+    const std::string meshSizeY = "meshSizeY";
+    const std::string timeStep = "timeStep";
+    const std::string freqkx = "freqkx";
+    const std::string freqky = "freqky";
+
     std::map<std::string,std::string> parameters;
     parameters = cfgParser.readParams(cfgFile);
-    var = cfgParser.getReqiuredParam<double>(requiredParameter, parameters);
-    cout<<var<<endl;
-    
-    return 0;
-}
+
+    double mp = cfgParser.getReqiuredParam<double>(polaritionsMass, parameters);
+    double mConstX = cfgParser.getReqiuredParam<double>(meshConstX, parameters);
+    double mConstY = cfgParser.getReqiuredParam<double>(meshConstY, parameters);
+    double f = cfgParser.getReqiuredParam<double>(fieldAmplitude, parameters);
+    double hbar = cfgParser.getReqiuredParam<double>(planckConst, parameters);
+    double mc = cfgParser.getReqiuredParam<double>(bosonMass, parameters);
+    double dt = cfgParser.getReqiuredParam<double>(timeStep, parameters);
+    double wkx = cfgParser.getReqiuredParam<double>(freqkx, parameters);
+    double wky = cfgParser.getReqiuredParam<double>(freqky, parameters);
+
+    int mSizeX = cfgParser.getReqiuredParam<int>(meshSizeX, parameters);
+    int mSizeY = cfgParser.getReqiuredParam<int>(meshSizeY, parameters);
+
+
+
+
+};
