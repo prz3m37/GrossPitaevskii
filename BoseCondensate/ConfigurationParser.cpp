@@ -44,7 +44,7 @@ class ConfigParser{
             {
                 std::string line;
                 while(getline(cFile, line)){
-                    line.erase(std::remove_if(line.begin(), line.end(), std::isspace),
+                    line.erase(remove_if(line.begin(), line.end(), isspace),
                                         line.end());
                     if(line[0] == '#' || line.empty())
                         continue;

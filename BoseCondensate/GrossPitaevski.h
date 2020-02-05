@@ -1,22 +1,18 @@
-#ifndef GROSS_PITAEVSKII
-#define GROSS_PITAEVSKII
-#include <complex>
+#ifndef NUMERICAL_METHODS
+#define NUMERICAL_METHODS
+#include <complex.h> 
+#include "Utils.cpp"
 
-class GrossPitaevskiiEquations{
+
+class GrossPitaevski{
     private:
-        std::complex<double> getGaussPulse(double x, double y, double t);
-        std::complex<double> getLaplaceOperatior(std::complex<double> (*Psi)(double, double, double),
-         double x, double y, double t);
+        Utils utils;
+        const std::complex<double> i = std::complex<double>(0, 1);
 
     public:
-        std::complex<double> getNonSpinFirstGPEquation(double x, double y, double t);
-        std::complex<double> getNonSpinSecondGPEquation(double x, double y, double t);
-
-        std::complex<double> getSpinFirstGPEquation(double x, double y, double t);
-        std::complex<double> getSpinSecondGPEquation(double x, double y, double t);
-        std::complex<double> getSpinThirdGPEquation(double x, double y, double t);
-        std::complex<double> getSpinFourthGPEquation(double x, double y, double t);
-
+        std::complex<double> getPsiXSubstep(std::complex<double> PsiC[], std::complex<double> PsiX[], double t);
+        std::complex<double>* getPsiCSubstep(std::complex<double> PsiC[], std::complex<double> PsiX[], double t);
+        std::complex<double> getRungeKutta();
 };
 
-#endif /* GROSS_PITAEVSKII */
+#endif /* NUMERICAL_METHODS */
