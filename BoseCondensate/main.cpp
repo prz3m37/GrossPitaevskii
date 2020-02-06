@@ -1,6 +1,20 @@
 #include "ConfigurationParser.cpp"
 using namespace std ;
 
+void f()
+{
+    int numOfTimeSteps = 10;
+    double t=0;
+    double dt = 0.01;
+    for (int n = 0; n < numOfTimeSteps; n++)
+    {
+        //cout<<t<<endl;
+        t += 1;
+        cout<<t<<endl;
+    }
+
+};
+
 int main()
 {
 
@@ -35,5 +49,6 @@ int main()
     // int mSizeX = cfgParser.getReqiuredParam<int>(meshSizeX, parameters);
     // int mSizeY = cfgParser.getReqiuredParam<int>(meshSizeY, parameters);
 
+    f();
 
 };

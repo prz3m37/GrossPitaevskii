@@ -45,25 +45,17 @@ void Utils::saveLog(std::string message)
 	logFile.close();
 };
 
-void Utils::saveResultsToFile(std::complex<double>Psi[])
+// simple for now maybe in future will change the saving loop
+void Utils::saveResultsToFile()
 {
-    int arraySize = sizeof(Psi) / sizeof(std::complex<double>);
-    std::ofstream resultFile;
-
-    if (resultFile.is_open())
-    {
-        resultFile.open("resultFile.txt", std::ios_base::app);
-        for(int i = 0; i < arraySize; i ++)
-        {
-            resultFile << Psi[i] << "\n";
-        }
-        std::string message = "[INFO] Results saved to file.";
-        saveLog(message);
-        resultFile.close();
-    }
-    else
-    {
-        std::string message = "[ERROR] Unable to open file.";
-        saveLog(message);
-    }
 }
+
+std::complex<double> Utils::csquare(std::complex<double> z)
+{
+    return z * z; 
+};
+
+double Utils::rsquare(double x)
+{
+    return x * x; 
+};

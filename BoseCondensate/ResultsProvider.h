@@ -1,11 +1,15 @@
 #ifndef RESULTS_PROVIDER
 #define RESULTS_PROVIDER
 #include <complex.h> 
+#include "GrossPitaevski.cpp"
+#include "Utils.cpp"
 
-class ResultProvider{
+class ResultsProvider {
     private:
-    public:
-        std::complex<double> computeResults();
+        Utils utils;
+        GrossPitaevski grossPitvk;
+    public:    
+        void computeResults();
 };
 
 #endif /* RESULTS_PROVIDER */
