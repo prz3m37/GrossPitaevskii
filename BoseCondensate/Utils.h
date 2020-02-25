@@ -11,7 +11,7 @@ class Utils{
         void saveLog(std::string message);
         std::complex<double> csquare(std::complex<double> z);
         bool checkLogFileExistence (const std::string& name);
-        void saveResultsToFile();
+        void saveResultsToFile(std::complex<double> Psi[], std::ofstream &of);
 };
 
 #endif /* UTILS */

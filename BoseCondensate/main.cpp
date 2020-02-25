@@ -1,17 +1,40 @@
 #include "ConfigurationParser.cpp"
 using namespace std ;
 
+void g(double t[])
+{
+    cout<< "..." <<endl;
+    int xsize = 10;
+    for(int i =0; i < xsize; i++)
+    {
+        t[i] = i;
+    }
+
+};
+
+
 void f()
 {
     int numOfTimeSteps = 10;
-    double t=0;
-    double dt = 0.01;
+    double t[10];
+    int xsize = 10;
+    //double dt = 0.01;
+    for(int i =0; i < xsize; i++)
+    {
+        cout<<"before func: "<<t[i]<<endl;;
+    }
+
     for (int n = 0; n < numOfTimeSteps; n++)
     {
         //cout<<t<<endl;
-        t += 1;
-        cout<<t<<endl;
+
+        g(t);
     }
+
+    for (int j = 0; j < numOfTimeSteps; j++)
+    {
+        cout<<"after func: "<<t[j]<<endl;
+    } 
 
 };
 

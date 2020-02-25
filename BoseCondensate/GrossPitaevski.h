@@ -10,12 +10,14 @@ class GrossPitaevski{
         Utils utils;
 
         const std::complex<double> i = std::complex<double>(0, 1);
+        std::complex<double> F(double x, double t);
         std::complex<double> *getPsiXSubstep(std::complex<double> PsiC[], std::complex<double> PsiX[], double t);
         std::complex<double> *getPsiCSubstep(std::complex<double> PsiC[], std::complex<double> PsiX[], double t);
         std::complex<double> *incerementTimestep(std::complex<double> PsiC[], std::complex<double> PsiX[], double t);
         
         public:
             void getRungeKutta(std::complex<double> PsiC[], std::complex<double> PsiX[], double t, double dt);
+            void applySafeWindow(std::complex<double> PsiC[], std::complex<double> PsiX[]);
 };
 
 #endif /* NUMERICAL_METHODS */

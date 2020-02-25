@@ -46,8 +46,23 @@ void Utils::saveLog(std::string message)
 };
 
 // simple for now maybe in future will change the saving loop
-void Utils::saveResultsToFile()
+void Utils::saveResultsToFile(std::complex<double> Psi[], std::ofstream &of)
 {
+    int xsize;
+    int ysize;
+    int printXStep;
+    int printYStep;
+
+    for (int x= 0; x < xsize; x+= printXStep)
+    {
+        for (int y = 0; y < ysize; y += printYStep)
+        {
+            if (y > 0)
+                of << '\t';
+            of << std::setprecision(5) << Psi[x * ysize + y];
+        }
+        of << std::endl;
+    }
 }
 
 std::complex<double> Utils::csquare(std::complex<double> z)

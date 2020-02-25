@@ -2,6 +2,37 @@
 #include <complex.h>
 typedef std::complex<double> cdoub;
 
+
+void GrossPitaevski::applySafeWindow(cdoub PsiC[], cdoub PsiX[])
+{
+    int xsize;
+    int ysize;
+    int sx;
+    int xmin;
+    int wb; 
+#pragma omp parallel for schedule(static)
+    for (int i = 0; i < xsize; ++i) {
+        const double x = i * sx + xmin;
+        const double cx = exp(-pow(x / wb, 20));
+        for (int j = 0; j < ysize; ++j) {
+            const int q = i * ysize + j;
+            PsiC[q] *= cx;
+            PsiX[q] *= cx;
+        }
+    }
+}
+
+cdoub GrossPitaevski::F(double x, double t)
+{
+    double Fp;
+    double deltaomega;
+    double kp;
+    double w;
+    cdoub F = Fp * exp(i * (kp * x - deltaomega * t))
+        * exp(-utils.rsquare(x) / (2 * utils.rsquare(w)));
+    return F;
+}
+
 cdoub *GrossPitaevski::getPsiCSubstep(cdoub PsiC[], cdoub PsiX[], double t)
 {
     int xsize;
@@ -14,6 +45,7 @@ cdoub *GrossPitaevski::getPsiCSubstep(cdoub PsiC[], cdoub PsiX[], double t)
     double hbar;
 
     cdoub *GPEquation = new cdoub[xsize * ysize];
+    #pragma omp parallel for schedule(static)
     for (int x=0; x < xsize; x++)
     {
         for (int y=0; y < ysize; y++)
@@ -25,14 +57,15 @@ cdoub *GrossPitaevski::getPsiCSubstep(cdoub PsiC[], cdoub PsiX[], double t)
             const cdoub PsiCyp1 = y < ysize - 1 ? PsiC[q + 1] : PsiC[x * ysize];
 
             GPEquation[q] = 
-            (-i * OmegaR / hbar * PsiX[q] + (i * hbar / (2 * mc) / utils.rsquare(mConstX)
-                       * (PsiCxm1 - 2.0 * PsiC[q] + PsiCxp1))
-                       + (i * hbar / (2 * mc) / utils.rsquare(mConstY)
-                       * (PsiCym1 - 2.0 * PsiC[q] + PsiCyp1)) - (GammaC / 2 * PsiC[q]));
+            (-i * F(x,t) -i * OmegaR / hbar * PsiX[q] 
+                    + (i * hbar / (2 * mc) / utils.rsquare(mConstX) 
+                    * (PsiCxm1 - 2.0 * PsiC[q] + PsiCxp1))
+                    + (i * hbar / (2 * mc) / utils.rsquare(mConstY)
+                    * (PsiCym1 - 2.0 * PsiC[q] + PsiCyp1)) - (GammaC / 2 * PsiC[q]));
         }
     }
     return GPEquation;
-};
+}
 
 cdoub *GrossPitaevski::getPsiXSubstep(cdoub PsiC[], cdoub PsiX[], double t)
 {
@@ -44,6 +77,7 @@ cdoub *GrossPitaevski::getPsiXSubstep(cdoub PsiC[], cdoub PsiX[], double t)
     double GammaX;
 
     cdoub *GPEquation = new cdoub[xsize * ysize];
+    #pragma omp parallel for schedule(static)
     for (int x=0; x<xsize; x++)
     {
         for(int y; y< ysize; y++)
@@ -95,6 +129,7 @@ void GrossPitaevski::getRungeKutta(cdoub PsiC[], cdoub PsiX[], double t, double 
     cdoub *k4c = getPsiCSubstep(Psi4C, Psi4X, t + dt);
     cdoub *k4x = getPsiXSubstep(Psi4X, Psi4C, t + dt);
 
+#pragma omp parallel for schedule(static)
     for (int q = 0; q < (xsize * ysize); q++)
     {
         PsiC[q] += (k1c[q] + 2.0 * k2c[q] + 2.0 * k3c[q] + k4c[q]) * (dt / 6);
